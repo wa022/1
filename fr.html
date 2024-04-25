@@ -142,16 +142,16 @@
             <button class="navbar-link" data-nav-link>About</button>
           </li>-->
 
-          <li class="navbar-item">
-            <button class="navbar-link active" data-nav-link>Français</button>
+           <li class="navbar-item">
+            <button class="navbar-link active" data-nav-link data-lang="fr">Français</button>
           </li>
 
 <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>العربية</button>
+            <button class="navbar-link" data-nav-link data-lang="ar">العربية</button>
           </li>
 
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>English</button>
+            <button class="navbar-link" data-nav-link data-lang="en">English</button>
           </li>
 
    
@@ -267,7 +267,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const navLinks = document.querySelectorAll('.navbar-link');
   
   navLinks.forEach(link => {
-    link.addEventListener('click', function() {
+    link.addEventListener('click', function(event) {
+      event.preventDefault(); // منع السلوك الافتراضي للرابط
+
       // تحديد العنصر النشط حالياً وإزالة فئة النشاط
       const activeLink = document.querySelector('.navbar-link.active');
       if (activeLink) {
@@ -275,17 +277,14 @@ document.addEventListener("DOMContentLoaded", function() {
       }
       this.classList.add('active'); // إضافة فئة النشاط للرابط المنقرض
 
-      // إزالة فئة النشاط من جميع الصفحات
-      const articles = document.querySelectorAll('article');
-      articles.forEach(article => {
-        article.classList.remove('active');
-      });
-
-      // تحديد اللغة وجعل الصفحة المناسبة نشطة
-      const lang = this.getAttribute('lang');
-      const targetArticle = document.querySelector(`article[data-page="${lang}"]`);
-      if (targetArticle) {
-        targetArticle.classList.add('active');
+      // تحديد اللغة وتوجيه المستخدم إلى الصفحة المناسبة
+      const lang = this.getAttribute('data-lang');
+      if (lang === 'en') {
+        window.location.href = "/1/index.html"; // توجيه المستخدم إلى الصفحة الإنجليزية
+      } else if (lang === 'fr') {
+        window.location.href = "/1/fr.html"; // توجيه المستخدم إلى الصفحة الفرنسية
+      } else if (lang === 'ar') {
+        window.location.href = "/1/ar.html"; // توجيه المستخدم إلى الصفحة العربية
       }
     });
   });
