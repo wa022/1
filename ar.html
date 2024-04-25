@@ -318,22 +318,25 @@ document.addEventListener("DOMContentLoaded", function() {
       }
       this.classList.add('active');
 
-      // تحديد اللغة المستهدفة من الرابط المنقر
-      const lang = this.getAttribute('lang');
-      let targetPage;
-      if (lang === 'fr') {
-        targetPage = '/1/fr.html';
-      } else if (lang === 'ar') {
-        targetPage = '/1/ar.html';
-      } else {
-        targetPage = '/1/index.html'; // صفحة الصفحة الرئيسية بالإنجليزية
-      }
+      // إزالة فئة النشاط من جميع الصفحات
+      const articles = document.querySelectorAll('article');
+      articles.forEach(article => {
+        article.classList.remove('active');
+      });
 
-      // توجيه المستخدم إلى الصفحة المحددة
-      window.location.href = targetPage;
+      // إيجاد الصفحة المطابقة وجعلها نشطة
+      const lang = this.getAttribute('lang');
+      if (lang === 'fr') {
+        document.querySelector('article[data-page="français"]').classList.add('active');
+      } else if (lang === 'ar') {
+        document.querySelector('article[data-page="العربية"]').classList.add('active');
+      } else {
+        document.querySelector('article[data-page="english"]').classList.add('active');
+      }
     });
   });
 });
+
 
 
 </script>
