@@ -294,29 +294,35 @@ article[data-page="العربية"] .article-title::after {
 
 <!--- js nav bar to chang-->
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const navLinks = document.querySelectorAll('.navbar-link');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        // تحديد العنصر النشط حاليا وتغيير لونه
-        const activeLink = document.querySelector('.navbar-link.active');
-        if (activeLink) {
-          activeLink.classList.remove('active');
-        }
-        this.classList.add('active');
+document.addEventListener("DOMContentLoaded", function() {
+  const navLinks = document.querySelectorAll('.navbar-link');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      // تحديد العنصر النشط حاليا وتغيير لونه
+      const activeLink = document.querySelector('.navbar-link.active');
+      if (activeLink) {
+        activeLink.classList.remove('active');
+      }
+      this.classList.add('active');
 
-        const pageName = this.textContent.toLowerCase(); // اسم الصفحة المستهدفة
-        const articles = document.querySelectorAll('article');
-        articles.forEach(article => {
-          article.classList.remove('active'); // إزالة فئة النشاط من جميع الصفحات
-          if (article.getAttribute('data-page') === pageName) {
-            article.classList.add('active'); // إضافة فئة النشاط للصفحة المستهدفة فقط
-          }
-        });
-      });
+      // تحديد اللغة المستهدفة من الرابط المنقر
+      const lang = this.getAttribute('lang');
+      let targetPage;
+      if (lang === 'fr') {
+        targetPage = '/1/fr.html';
+      } else if (lang === 'ar') {
+        targetPage = '/1/ar.html';
+      } else {
+        targetPage = '/1/index.html'; // صفحة الصفحة الرئيسية بالإنجليزية
+      }
+
+      // توجيه المستخدم إلى الصفحة المحددة
+      window.location.href = targetPage;
     });
   });
-  
+});
+
 
 </script>
 
