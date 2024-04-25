@@ -255,18 +255,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // تحديد اللغة المستهدفة من الرابط المنقر
       const lang = this.getAttribute('lang');
-      const pageName = lang ? lang.toLowerCase() : 'english';
+      let targetPage;
+      if (lang === 'fr') {
+        targetPage = '/1/fr.html';
+      } else if (lang === 'ar') {
+        targetPage = '/1/ar.html';
+      } else {
+        targetPage = '/1/index.html'; // صفحة الصفحة الرئيسية بالإنجليزية
+      }
 
-      const articles = document.querySelectorAll('article');
-      articles.forEach(article => {
-        article.classList.remove('active'); // إزالة فئة النشاط من جميع الصفحات
-        if (article.getAttribute('data-page') === pageName) {
-          article.classList.add('active'); // إضافة فئة النشاط للصفحة المستهدفة فقط
-        }
-      });
+      // توجيه المستخدم إلى الصفحة المحددة
+      window.location.href = targetPage;
     });
   });
 });
+
 
 
 </script>
