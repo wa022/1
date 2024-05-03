@@ -63,11 +63,15 @@
           <div class="button" style="width: 100%;">
             <div class="msg-sending" style="text-align: center;">
               <span id="processingMessage" style="display: none;">Sedang Diproses...</span>
-              <span id="successMessage" style="display: none;">Data Terkirim!</span>
+              <span id="successMessage" style="display: none;"></span>
             </div>
             <button class="form-btn" type="button" id="submitButton" onclick="submitAndClearForm();">Send Request</button>
           </div>
         </form>
+        <div class="form-label" id="afterSubmitMessage" style="display: none;">
+          <p style="font-size: 0.8em;">لقد تم استقبال طلبكم تحت المعرف :<br><span id="orderIdMessage"><br></span> وسيتم انجازه في أقرب وقت ممكن.</p>
+          <p style="font-size: 0.7em;">المرجو الاحتفاظ بالمعرف فقد تحتاجه أثناء عملية تتبع طلبكم.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -78,6 +82,8 @@
     var submitButton = document.getElementById('submitButton');
     var processingMessage = document.getElementById('processingMessage');
     var successMessage = document.getElementById('successMessage');
+    var orderIdMessage = document.getElementById('orderIdMessage');
+    var afterSubmitMessage = document.getElementById('afterSubmitMessage');
     var orderId = generateRandomOrderId(); // Generate random orderId
     document.getElementById('orderId').value = orderId; // Assign it to the hidden field
 
@@ -101,11 +107,11 @@
         submitButton.disabled = false;
         processingMessage.style.display = 'none';
 
-        // Show the success message and hide it after 3 seconds
-        successMessage.style.display = 'block';
-        setTimeout(function() {
-          successMessage.style.display = 'none';
-        }, 3000);
+        // Show success message
+        orderIdMessage.textContent = orderId;
+        afterSubmitMessage.style.display = 'block';
+        // Hide the form
+        document.getElementById('uploadForm').style.display = 'none';
       })
       .catch(error => {
         console.error('Error submitting form:', error);
