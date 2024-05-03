@@ -211,9 +211,8 @@ button[data-lang="ar"] {
  <br>
 <br>
   <h3 class="h3 article-title">Commission Form</h3>
-<br>
 
- <form id="uploadForm" action="https://script.google.com/macros/s/AKfycbyAr8F4YGY5SwjBJFLTbfk4c3cQtxMMZ90q9qvBTSXJS6nVJvsoEcZUki3pUaQL80eZ6Q/exec" method="POST"  style="color: white;margin-left: 50px;margin-right: 50px;margin-bottom: 50px;">
+  <form id="uploadForm" action="https://script.google.com/macros/s/AKfycbyAr8F4YGY5SwjBJFLTbfk4c3cQtxMMZ90q9qvBTSXJS6nVJvsoEcZUki3pUaQL80eZ6Q/exec" method="POST"  style="color: white;margin-left: 50px;margin-right: 50px;margin-bottom: 50px;">
           <input type="hidden" value="" name="fileContent" id="fileContent">
           <input type="hidden" value="" name="filename" id="filename">
           <div class="input-box">
@@ -243,6 +242,24 @@ button[data-lang="ar"] {
           </div>
 
           
+          <div class="input-box">
+            <label for="kontak" class="form-label">Text elements :</label>
+            <input  type="text" id="kontak" name="text" class="form-input" placeholder="Masukan nomor telepon anda " required>
+          </div>
+
+         
+
+           <div class="button" style="width: 100%;">
+           
+           <div class="msg-sending" style="text-align: center;">
+           <span id="processingMessage" style="display: none;">Sedang Diproses...</span>
+            <span id="successMessage" style="display: none;">Data Terkirim!</span>
+            </div>
+            
+            <button class="form-btn" type="button" id="submitButton" onclick="submitAndClearForm();">Send Request<ion-icon name="paper-plane"></ion-icon></button>
+            
+            
+          </div>
         </form>
 <br>
 <h3 class="h3 form-title">Bring Yourself or Your Loved Ones to Life in a Digital Portrait</h2>
