@@ -31,6 +31,31 @@
 button[data-lang="ar"] {
     font-family: "Tajawal", sans-serif;
 }
+
+.form-label {
+  color:white;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.form-input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.msg-sending {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+
+.form-btn{
+  color:white;
+  margin-left: 5px;
+  margin-right: 5px;
+  float: right;
+
+}
+
+
 </style>
 
 
@@ -220,6 +245,57 @@ button[data-lang="ar"] {
 
 <h3 class="h3 form-title">Let's Capture Precious Memories and Create Lasting Keepsakes Together!</h3>
 
+ <form id="uploadForm" action="https://script.google.com/macros/s/AKfycbyAr8F4YGY5SwjBJFLTbfk4c3cQtxMMZ90q9qvBTSXJS6nVJvsoEcZUki3pUaQL80eZ6Q/exec" method="POST"  style="color: white;margin-left: 50px;margin-right: 50px;margin-bottom: 50px;">
+          <input type="hidden" value="" name="fileContent" id="fileContent">
+          <input type="hidden" value="" name="filename" id="filename">
+          <div class="input-box">
+            <label for="nama" class="form-label">Name :</label>
+            <input type="text" id="nama" name="Name" class="form-input" placeholder="Masukan nama lengkap anda" required>
+          </div>
+
+<div class="input-box">
+            <label for="email" class="form-label">Email address :</label>
+            <input type="text" id="email" name="email" class="form-input" placeholder="Masukan email anda " required>
+          </div>
+
+
+ <div class="input-box">
+            <label for="file" class="form-label">Photo of the subject(s) :</label>
+            <input class="form-input" required id="attach" name="Photo" type="file"/>
+          </div>
+
+          <div class="input-box">
+            <label for="tempat_lahir" class="form-label">Subject of portrait :</label>
+            <input  type="text" id="tempat_lahir" name="Subject" class="form-input" placeholder="Masukan tempat lahir anda" required>
+          </div>
+
+          <div class="input-box">
+            <label for="alamat" class="form-label">Background description :</label>
+            <input type="text"  id="alamat" name="Background" class="form-input" placeholder="Masukan alamat anda" required>
+          </div>
+
+          
+          <div class="input-box">
+            <label for="kontak" class="form-label">Text elements :</label>
+            <input  type="text" id="kontak" name="text" class="form-input" placeholder="Masukan nomor telepon anda " required>
+          </div>
+
+         
+
+           <div class="button" style="width: 100%;">
+           
+           <div class="msg-sending" style="text-align: center;">
+           <span id="processingMessage" style="display: none;">Sedang Diproses...</span>
+            <span id="successMessage" style="display: none;">Data Terkirim!</span>
+            </div>
+            
+            <button class="form-btn" type="button" id="submitButton" onclick="submitAndClearForm();">Send Request<ion-icon name="paper-plane"></ion-icon></button>
+            
+            
+          </div>
+        </form>
+
+
 <p>I'm excited to collaborate with you on bringing your creative vision to life. By filling out this form, you're taking the first step towards creating a cherished digital portrait that will be treasured for years to come.</p>
 
 </article>
@@ -273,7 +349,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+  
+    function submitAndClearForm() {
+    var reader = new FileReader();
+    var file = document.getElementById('attach').files[0];
+    var submitButton = document.getElementById('submitButton');
+    var processingMessage = document.getElementById('processingMessage');
+    var successMessage = document.getElementById('successMessage');
 
+    reader.onload = function(){
+      document.getElementById('fileContent').value = reader.result;
+      document.getElementById('filename').value = file.name;
+
+      // Disable the submit button and show the processing message
+      submitButton.disabled = true;
+      processingMessage.style.display = 'block';
+
+      // Submit the form using fetch
+      fetch(document.getElementById('uploadForm').action, {
+        method: 'POST',
+        body: new FormData(document.getElementById('uploadForm'))
+      })
+      .then(response => response.text())
+      .then(data => {
+        // Clear the form fields and hide the processing message
+        document.getElementById('uploadForm').reset();
+        submitButton.disabled = false;
+        processingMessage.style.display = 'none';
+
+        // Show the success message and hide it after 3 seconds
+        successMessage.style.display = 'block';
+        setTimeout(function() {
+          successMessage.style.display = 'none';
+        }, 3000);
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+        // Handle submission error (optional)
+        submitButton.disabled = false;
+        processingMessage.style.display = 'none';
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+  
 
 
 </script>
